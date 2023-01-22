@@ -36,3 +36,21 @@ const userSchema=new Schema(
 );
 
 module.exports= mongoose.model("User",userSchema);
+
+
+
+// const studentSchema= new Schema({
+
+//     name:{
+//         type:String,
+//         required:true
+//     },
+//     email:{
+//         type:String,
+//         required:true
+//     },
+//     password:{
+//         type:String,
+//         required:true
+//     },
+// })

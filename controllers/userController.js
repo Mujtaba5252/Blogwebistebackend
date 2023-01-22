@@ -1,5 +1,6 @@
 const User=require("../models/User.js");
 const bcrypt=require("bcryptjs")
+
  const getAlluser=async(req,resp,next)=>{
 
     let users;
@@ -73,7 +74,7 @@ const login=async(req,resp,next)=>{
     {
         return resp.status(400).json({message:"Invalid Credentials ! Please Try Again"})
     }
-    return resp.status(200).json({message:"Login Successful !"})
+    return resp.status(200).json({message:"Login Successful !",user:existingUser})
 }
 
 

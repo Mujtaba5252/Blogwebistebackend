@@ -9,7 +9,7 @@ const {MongoClient}=require("mongodb");
 const getAllBlogs = async (req, res) => {
     let blogs;
     try{
-        blogs=await Blog.find();
+        blogs=await Blog.find().populate("user");
 
 
     }
@@ -68,14 +68,13 @@ const addBlog = async (req, res) => {
 const updateBlog = async (req, res) => {
 
     const blogId=req.params.id;
-    const {title,description,image,user}=req.body;
+    const {title,description}=req.body;
     let blog;
     try{
         blog=await Blog.findByIdAndUpdate(blogId,{
             title:title,
             description:description,
-            image:image,
-            user:user
+            
         })
     }
     catch(err)
@@ -128,19 +127,19 @@ const deleteBlog = async (req, res) => {
 
 const getBlogsByUserId = async (req, res) => {
     const userId=req.params.id;
-    let user;
+    let userBlogs;
     try{
-        user=await User.findById(userId).populate("blogs");
+        userBlogs=await User.findById(userId).populate("blogs");
     }
     catch(err)
     {
         console.log(err);
     }
-    if(!user)
+    if(!userBlogs)
     {
         return res.status(404).json({message:"No User Found"});
     }
-    return res.status(200).json({blogs:user.blogs});
+    return res.status(200).json({user:userBlogs});
 }
 
 module.exports = {getAllBlogs,addBlog,updateBlog,getBlogById,deleteBlog,getBlogsByUserId};
